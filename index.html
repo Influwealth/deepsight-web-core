@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DeepSight Quantum AI</title>
+  <style>
+    /* Basic styling for debugging */
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+    }
+    
+    .debug-info {
+      background-color: #e8f5e9;
+      border: 1px solid #81c784;
+      border-radius: 4px;
+      padding: 15px;
+      margin: 20px 0;
+    }
+    
+    .debug-panel {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 15px;
+      margin-top: 20px;
+    }
+    
+    .status-ok {
+      color: green;
+    }
+    
+    .status-error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to DeepSight Quantum AI</h1>
+  
+  <div class="debug-info">
+    <h2>Debug Information</h2>
+    <p>This panel shows the current status of your page components.</p>
+  </div>
+  
+  <div class="debug-panel" id="debug-panel">
+    <h3>Script Loading Status</h3>
+    <ul>
+      <li>Main Script: <span id="main-script-status">Checking...</span></li>
+      <li>Compliance Agent: <span id="compliance-agent-status">Checking...</span></li>
+      <li>Social Agent: <span id="social-agent-status">Checking...</span></li>
+    </ul>
+  </div>
+
+  <script>
+    // Debug info script
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM fully loaded');
+      
+      function updateStatus(id, isLoaded) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.textContent = isLoaded ? 'Loaded ✓' : 'Failed to load ✗';
+          element.className = isLoaded ? 'status-ok' : 'status-error';
+        }
+      }
+      
+      // Check if main script loaded
+      setTimeout(() => {
+        if (window.mainScriptLoaded) {
+          updateStatus('main-script-status', true);
+        } else {
+          updateStatus('main-script-status', false);
+          console.error('Main script not loaded or not properly initialized');
+        }
+      }, 500);
+      
+      // Check if compliance agent loaded
+      setTimeout(() => {
+        if (window.complianceAgentLoaded) {
+          updateStatus('compliance-agent-status', true);
+        } else {
+          updateStatus('compliance-agent-status', false);
+          console.error('Compliance agent not loaded or not properly initialized');
+        }
+      }, 500);
+      
+      // Check if social agent loaded
+      setTimeout(() => {
+        if (window.socialAgentLoaded) {
+          updateStatus('social-agent-status', true);
+        } else {
+          updateStatus('social-agent-status', false);
+          console.error('Social agent not loaded or not properly initialized');
+        }
+      }, 500);
+    });
+  </script>
+  
+  <script src="script.js"></script>
+  <script>
+    // This will help us track if the script loaded
+    window.mainScriptLoaded = true;
+    console.log('Main script loaded');
+  </script>
+  
+  <script src="agents/compliance-agent.js"></script>
+  <script>
+    // This will help us track if the compliance agent loaded
+    window.complianceAgentLoaded = true;
+    console.log('Compliance agent loaded');
+  </script>
+  
+  <script src="agents/social-agent.js"></script>
+  <script>
+    // This will help us track if the social agent loaded
+    window.socialAgentLoaded = true;
+    console.log('Social agent loaded');
+  </script>
+</body>
+</html>
