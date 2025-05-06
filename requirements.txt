@@ -1,5 +1,0 @@
-fastapi==0.109.0
-uvicorn==0.28.0
-requests==2.32.3
-litellm==0.20.15
-crewai==0.29.2
