@@ -1,4 +1,4 @@
-﻿[build]
+[build]
   base = "/"
   publish = "public"
   command = "python auto_deploy.py"
