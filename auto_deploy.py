@@ -1,17 +1,19 @@
-﻿# -*- coding: utf-8 -*-
-import subprocess
+﻿import subprocess
 
-# Install dependencies
-subprocess.run(["pip", "install", "-r", "requirements.txt"], shell=True, check=True)
-
-# Set up Git configuration
+# Configure Git settings (use local instead of global)
 subprocess.run(["git", "config", "--local", "user.name", "Influwealth"], check=True)
-subprocess.run(["git", "config", "--global", "user.email", "influwealth@example.com"], shell=True, check=True)
+subprocess.run(["git", "config", "--local", "user.email", "influwealth@example.com"], check=True)
 
-# Commit and push changes
-subprocess.run(["git", "add", "."], shell=True, check=True)
-subprocess.run(["git", "commit", "-m", "Finalized deployment setup"], shell=True, check=True)
-subprocess.run(["git", "push", "origin", "Qbint", "--force"], shell=True, check=True)
+# Add all changes
+subprocess.run(["git", "add", "."], check=True)
 
-print("âœ… Deployment completed successfully!")
+# Check if there are staged changes before committing
+if subprocess.run(["git", "diff", "--cached", "--quiet"]).returncode != 0:
+    subprocess.run(["git", "commit", "-m", "Finalized deployment setup"], check=True)
+    subprocess.run(["git", "push", "origin", "Qbint", "--force"], check=True)
+else:
+    print("No changes to commit. Skipping commit.")
+
+print("Deployment setup completed successfully!")
+
 
