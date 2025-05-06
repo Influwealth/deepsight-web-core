@@ -5,7 +5,7 @@ import subprocess
 subprocess.run(["pip", "install", "-r", "requirements.txt"], shell=True, check=True)
 
 # Set up Git configuration
-subprocess.run(["git", "config", "--global", "user.name", "Influwealth"], shell=True, check=True)
+subprocess.run(["git", "config", "--local", "user.name", "Influwealth"], check=True)
 subprocess.run(["git", "config", "--global", "user.email", "influwealth@example.com"], shell=True, check=True)
 
 # Commit and push changes
