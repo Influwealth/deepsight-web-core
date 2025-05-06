@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 Environment Variable Validation Script
 This script validates that required environment variables are properly loaded and configured.
@@ -70,27 +70,27 @@ def validate_environment_variables() -> Dict[str, bool]:
     for var_name, var_desc in REQUIRED_VARIABLES.items():
         value = os.getenv(var_name)
         if value is None:
-            logger.error(f"❌ Missing required environment variable: {var_name}")
+            logger.error(f"âŒ Missing required environment variable: {var_name}")
             results[var_name] = False
         elif value.strip() == "":
-            logger.error(f"❌ Required environment variable {var_name} is empty")
+            logger.error(f"âŒ Required environment variable {var_name} is empty")
             results[var_name] = False
         elif "your_" in value.lower() and "_here" in value.lower():
-            logger.error(f"❌ Environment variable {var_name} contains placeholder value")
+            logger.error(f"âŒ Environment variable {var_name} contains placeholder value")
             results[var_name] = False
         else:
             # Mask sensitive information in logs
             masked_value = value[:4] + "*" * (len(value) - 4) if len(value) > 8 else "****"
-            logger.info(f"✅ Environment variable {var_name} is set: {masked_value}")
+            logger.info(f"âœ… Environment variable {var_name} is set: {masked_value}")
             results[var_name] = True
     
     # Check optional variables
     for var_name, var_desc in OPTIONAL_VARIABLES.items():
         value = os.getenv(var_name)
         if value is None:
-            logger.info(f"ℹ️ Optional environment variable {var_name} is not set")
+            logger.info(f"â„¹ï¸ Optional environment variable {var_name} is not set")
         else:
-            logger.info(f"✅ Optional environment variable {var_name} is set: {value}")
+            logger.info(f"âœ… Optional environment variable {var_name} is set: {value}")
     
     return results
 
@@ -106,7 +106,7 @@ def check_for_additional_variables() -> List[str]:
                 # Mask potentially sensitive values
                 value = os.getenv(key)
                 masked_value = value[:4] + "*" * (len(value) - 4) if value and len(value) > 8 else "****"
-                logger.info(f"ℹ️ Found additional environment variable: {key} = {masked_value}")
+                logger.info(f"â„¹ï¸ Found additional environment variable: {key} = {masked_value}")
     
     return additional_vars
 
@@ -115,11 +115,11 @@ def suggest_fixes(results: Dict[str, bool]) -> None:
     if all(results.values()):
         return
     
-    print("\n📝 Suggested fixes for environment variables:")
+    print("\nðŸ“ Suggested fixes for environment variables:")
     
     for var_name, is_valid in results.items():
         if not is_valid:
-            print(f"  • {var_name}: {REQUIRED_VARIABLES[var_name]}")
+            print(f"  â€¢ {var_name}: {REQUIRED_VARIABLES[var_name]}")
             if var_name == "GITHUB_TOKEN":
                 print("    - Create a token at: https://github.com/settings/tokens")
                 print("    - Required scopes: repo, workflow")
@@ -131,7 +131,7 @@ def suggest_fixes(results: Dict[str, bool]) -> None:
 
 def main() -> int:
     """Main execution function"""
-    print("🔍 Checking Environment Variables\n")
+    print("ðŸ” Checking Environment Variables\n")
     
     # Load environment variables
     load_environment_variables()
@@ -143,31 +143,31 @@ def main() -> int:
     additional_vars = check_for_additional_variables()
     
     # Print summary
-    print("\n📊 Environment Variables Summary:")
+    print("\nðŸ“Š Environment Variables Summary:")
     total = len(validation_results)
     valid = sum(validation_results.values())
-    print(f"  • Required variables: {valid}/{total} valid")
-    print(f"  • Additional variables detected: {len(additional_vars)}")
+    print(f"  â€¢ Required variables: {valid}/{total} valid")
+    print(f"  â€¢ Additional variables detected: {len(additional_vars)}")
     
     # Print current environment
-    print(f"\n🌐 Current Environment:")
-    print(f"  • Working directory: {os.getcwd()}")
-    print(f"  • Python version: {sys.version.split()[0]}")
-    print(f"  • Platform: {sys.platform}")
+    print(f"\nðŸŒ Current Environment:")
+    print(f"  â€¢ Working directory: {os.getcwd()}")
+    print(f"  â€¢ Python version: {sys.version.split()[0]}")
+    print(f"  â€¢ Platform: {sys.platform}")
     
     # Suggest fixes if needed
     if not all(validation_results.values()):
         suggest_fixes(validation_results)
         return 1
     
-    print("\n✅ All required environment variables are properly configured!")
+    print("\nâœ… All required environment variables are properly configured!")
     
     # Print values (with masking for security)
-    print("\n🔐 Current Values (partial):")
+    print("\nðŸ” Current Values (partial):")
     for var_name in REQUIRED_VARIABLES:
         value = os.getenv(var_name, "")
         masked_value = value[:4] + "*" * (len(value) - 4) if len(value) > 8 else "****"
-        print(f"  • {var_name}: {masked_value}")
+        print(f"  â€¢ {var_name}: {masked_value}")
     
     return 0
 

@@ -1,4 +1,4 @@
-import os
+﻿import os
 from crewai import Agent, Task, Crew
 from litellm import completion
 
@@ -57,7 +57,7 @@ crew = Crew(
 
 # Run the Crew
 if __name__ == "__main__":
-    print("🚀 Initializing DeepSight Core AI Mining Team...")
+    print("ðŸš€ Initializing DeepSight Core AI Mining Team...")
     result = crew.kickoff()
     print("Final Output:")
     print(result)

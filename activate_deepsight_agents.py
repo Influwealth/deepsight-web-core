@@ -1,4 +1,4 @@
-import os
+﻿import os
 import subprocess
 import sys
 
@@ -16,12 +16,12 @@ huggingface-hub>=0.19.4
 """)
 
     # Install dependencies first
-    print("📦 Installing dependencies...")
+    print("ðŸ“¦ Installing dependencies...")
     try:
         subprocess.run("pip install -r requirements.txt", shell=True, check=True)
-        print("✅ Dependencies installed successfully")
+        print("âœ… Dependencies installed successfully")
     except subprocess.CalledProcessError as e:
-        print(f"⚠️ Issue with requirements installation: {e}")
+        print(f"âš ï¸ Issue with requirements installation: {e}")
         print("Continuing anyway in case they're already installed...")
 
 # Run bootstrap before any other imports
@@ -37,7 +37,7 @@ try:
         print("Trying alternate import path...")
         from langchain.llms import HuggingFaceEndpoint
 except ImportError as e:
-    print(f"❌ Critical import error: {e}")
+    print(f"âŒ Critical import error: {e}")
     print("Please install the missing package manually with:")
     print(f"pip install {str(e).split()[-1]}")
     sys.exit(1)
@@ -45,13 +45,13 @@ except ImportError as e:
 # === LOAD API KEY ===
 HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
 if not HUGGINGFACE_API_KEY:
-    print("⚠️ Hugging Face API key missing. Please set it with:")
+    print("âš ï¸ Hugging Face API key missing. Please set it with:")
     print("    export HUGGINGFACE_API_KEY=your_key_here  # Linux/Mac")
     print("    set HUGGINGFACE_API_KEY=your_key_here     # Windows")
     sys.exit(1)
 
 # === CONFIGURE LLM PROPERLY ===
-print("🔄 Configuring LLM...")
+print("ðŸ”„ Configuring LLM...")
 try:
     # Using HuggingFaceEndpoint implementation
     llm = HuggingFaceEndpoint(
@@ -60,9 +60,9 @@ try:
         task="text-generation",
         max_length=2048
     )
-    print("✅ LLM configured successfully")
+    print("âœ… LLM configured successfully")
 except Exception as e:
-    print(f"❌ Failed to configure LLM: {e}")
+    print(f"âŒ Failed to configure LLM: {e}")
     print("Trying fallback configuration...")
     try:
         from langchain.llms import HuggingFaceHub
@@ -70,19 +70,19 @@ except Exception as e:
             repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1",
             huggingfacehub_api_token=HUGGINGFACE_API_KEY
         )
-        print("✅ LLM configured with fallback method")
+        print("âœ… LLM configured with fallback method")
     except Exception as e2:
-        print(f"❌ All LLM configuration attempts failed: {e2}")
+        print(f"âŒ All LLM configuration attempts failed: {e2}")
         sys.exit(1)
 
 # === SKIP GIT OPERATIONS FOR NOW ===
-print("ℹ️ Skipping Git operations for now")
+print("â„¹ï¸ Skipping Git operations for now")
 
 # === SKIP NETLIFY DEPLOYMENT FOR NOW ===
-print("ℹ️ Skipping Netlify deployment for now")
+print("â„¹ï¸ Skipping Netlify deployment for now")
 
 # === DEEPSIGHT CORE AGENTS ===
-print("🧠 Creating DeepSight agents...")
+print("ðŸ§  Creating DeepSight agents...")
 try:
     nova = Agent(
         role="Risk & Compliance Analyst",
@@ -115,13 +115,13 @@ try:
         verbose=True, 
         llm=llm
     )
-    print("✅ Agents created successfully")
+    print("âœ… Agents created successfully")
 except Exception as e:
-    print(f"❌ Failed to create agents: {e}")
+    print(f"âŒ Failed to create agents: {e}")
     sys.exit(1)
 
 # === TASKS - SIMPLIFIED FOR COMPATIBILITY ===
-print("📋 Creating tasks...")
+print("ðŸ“‹ Creating tasks...")
 try:
     compliance_audit = Task(
         description="Audit compliance risks for Kaspa mining.",
@@ -146,59 +146,59 @@ try:
         agent=stratops,
         expected_output="Unified deployment strategy."
     )
-    print("✅ Tasks created successfully")
+    print("âœ… Tasks created successfully")
 except Exception as e:
-    print(f"❌ Failed to create tasks: {e}")
+    print(f"âŒ Failed to create tasks: {e}")
     print("This might be due to incompatible CrewAI version")
     print("Try: pip install --upgrade crewai")
     sys.exit(1)
 
 # === FULL CREW ORCHESTRATION ===
-print("🤝 Setting up the crew...")
+print("ðŸ¤ Setting up the crew...")
 try:
     crew = Crew(
         agents=[nova, mindmax, deepsynth, stratops],
         tasks=[compliance_audit, wealth_design, intel_scan, global_strategy],
         verbose=True
     )
-    print("✅ Crew setup successfully")
+    print("âœ… Crew setup successfully")
 except Exception as e:
-    print(f"❌ Failed to set up crew: {e}")
+    print(f"âŒ Failed to set up crew: {e}")
     sys.exit(1)
 
 # === RUN CREW WITH COMPREHENSIVE ERROR HANDLING ===
 def main():
-    print("🚀 Launching DeepSight Agent Network...")
+    print("ðŸš€ Launching DeepSight Agent Network...")
     try:
         result = crew.kickoff()
-        print("\n✅ FINAL RESULT:")
+        print("\nâœ… FINAL RESULT:")
         print(result)
         
         # Save result to file
         try:
             with open("deepsight_output.txt", "w") as f:
                 f.write(result)
-            print("📝 Results saved to deepsight_output.txt")
+            print("ðŸ“ Results saved to deepsight_output.txt")
         except Exception as e:
-            print(f"⚠️ Could not save results to file: {e}")
+            print(f"âš ï¸ Could not save results to file: {e}")
             
     except Exception as e:
-        print(f"❌ Error during crew execution: {e}")
-        print("\n🔄 Attempting recovery by running key agent individually...")
+        print(f"âŒ Error during crew execution: {e}")
+        print("\nðŸ”„ Attempting recovery by running key agent individually...")
         
         try:
-            print("\n🧠 Running Strategic Orchestrator for contingency plan...")
+            print("\nðŸ§  Running Strategic Orchestrator for contingency plan...")
             strategic_insight = stratops.run("Provide core strategic guidance based on available information")
-            print("\n🔍 Strategic contingency output:")
+            print("\nðŸ” Strategic contingency output:")
             print(strategic_insight)
             
             # Save fallback result
             with open("deepsight_fallback_output.txt", "w") as f:
                 f.write(strategic_insight)
-            print("📝 Fallback results saved to deepsight_fallback_output.txt")
+            print("ðŸ“ Fallback results saved to deepsight_fallback_output.txt")
         except Exception as fallback_error:
-            print(f"❌ Complete system failure: {fallback_error}")
-            print("👉 Please check your API key and network connection.")
+            print(f"âŒ Complete system failure: {fallback_error}")
+            print("ðŸ‘‰ Please check your API key and network connection.")
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,4 @@
-import os
+﻿import os
 import requests
 
 # Load your Hugging Face API key
@@ -18,12 +18,12 @@ try:
 
     # Check the response status
     if response.status_code == 200:
-        print("✅ API call successful!")
+        print("âœ… API call successful!")
         print("Response:")
         print(response.json())
     else:
-        print(f"❌ Error: Received status code {response.status_code}")
+        print(f"âŒ Error: Received status code {response.status_code}")
         print("Response details:")
         print(response.text)
 except Exception as e:
-    print(f"❌ Error during API call: {str(e)}")
+    print(f"âŒ Error during API call: {str(e)}")

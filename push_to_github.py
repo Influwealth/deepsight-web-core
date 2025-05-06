@@ -1,4 +1,4 @@
-from dotenv import load_dotenv
+﻿from dotenv import load_dotenv
 import os
 import logging
 from github import Github
@@ -120,12 +120,12 @@ def push_to_github(repo, content, branch="main"):
             branch=branch
         )
         
-        logger.info(f"✅ Successfully pushed '{filename}' to GitHub.")
+        logger.info(f"âœ… Successfully pushed '{filename}' to GitHub.")
         logger.info(f"Commit SHA: {result['commit'].sha}")
         
         return {"success": True, "filename": filename, "commit_sha": result['commit'].sha}
     except Exception as e:
-        logger.error(f"❌ Failed to push to GitHub: {str(e)}")
+        logger.error(f"âŒ Failed to push to GitHub: {str(e)}")
         return {"success": False, "error": str(e)}
 
 # === MAIN EXECUTION ===
@@ -143,14 +143,14 @@ def main():
         result = push_to_github(repo, html_content)
         
         if result["success"]:
-            print(f"✅ Deployment successful! File: {result['filename']}")
+            print(f"âœ… Deployment successful! File: {result['filename']}")
             print(f"   Commit SHA: {result['commit_sha']}")
         else:
-            print(f"❌ Deployment failed: {result['error']}")
+            print(f"âŒ Deployment failed: {result['error']}")
             
     except Exception as e:
         logger.critical(f"Script execution failed: {str(e)}")
-        print(f"❌ Critical error: {str(e)}")
+        print(f"âŒ Critical error: {str(e)}")
 
 # Execute the script if run directly
 if __name__ == "__main__":

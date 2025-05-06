@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import subprocess
 
 # Install dependencies
@@ -13,5 +13,5 @@ subprocess.run(["git", "add", "."], shell=True, check=True)
 subprocess.run(["git", "commit", "-m", "Finalized deployment setup"], shell=True, check=True)
 subprocess.run(["git", "push", "origin", "Qbint", "--force"], shell=True, check=True)
 
-print("✅ Deployment completed successfully!")
+print("âœ… Deployment completed successfully!")
 

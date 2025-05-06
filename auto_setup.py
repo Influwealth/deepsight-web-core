@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """
 DeepSight + WealthBridge Setup Script
 This script sets up the initial project structure and files needed for the
@@ -235,7 +235,7 @@ def main():
             branch=branch_name
         )
         
-        logger.info(f"✅ Successfully pushed '{filename}' to GitHub")
+        logger.info(f"âœ… Successfully pushed '{filename}' to GitHub")
         logger.info(f"Commit SHA: {result['commit'].sha}")
         
         # Also update the main index.html if it exists in the repo
@@ -249,7 +249,7 @@ def main():
                 sha=main_index.sha,
                 branch=branch_name
             )
-            logger.info("✅ Successfully updated main index.html")
+            logger.info("âœ… Successfully updated main index.html")
         except Exception as e:
             logger.info(f"Creating new main index.html file")
             repo.create_file(
@@ -258,14 +258,14 @@ def main():
                 content=content,
                 branch=branch_name
             )
-            logger.info("✅ Successfully created main index.html")
+            logger.info("âœ… Successfully created main index.html")
         
-        print(f"✅ Deployment successful! File: {filename}")
+        print(f"âœ… Deployment successful! File: {filename}")
         print(f"   View at: https://github.com/{repo.full_name}/blob/{branch_name}/{filename}")
         
     except Exception as e:
-        logger.error(f"❌ Failed to push to GitHub: {str(e)}")
-        print(f"❌ Error: {str(e)}")
+        logger.error(f"âŒ Failed to push to GitHub: {str(e)}")
+        print(f"âŒ Error: {str(e)}")
         return False
     
     return True
@@ -285,13 +285,13 @@ def create_file(path, content, description="file"):
         try:
             with open(path, "w") as f:
                 f.write(content)
-            logger.info(f"✅ Created {description} at {path}")
+            logger.info(f"âœ… Created {description} at {path}")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to create {description} at {path}: {str(e)}")
+            logger.error(f"âŒ Failed to create {description} at {path}: {str(e)}")
             return False
     else:
-        logger.info(f"ℹ️ {description} already exists at {path}. Skipping creation.")
+        logger.info(f"â„¹ï¸ {description} already exists at {path}. Skipping creation.")
         return False
 
 def create_directory(path):
@@ -299,13 +299,13 @@ def create_directory(path):
     if not os.path.exists(path):
         try:
             os.makedirs(path)
-            logger.info(f"✅ Created directory {path}")
+            logger.info(f"âœ… Created directory {path}")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to create directory {path}: {str(e)}")
+            logger.error(f"âŒ Failed to create directory {path}: {str(e)}")
             return False
     else:
-        logger.info(f"ℹ️ Directory {path} already exists. Skipping creation.")
+        logger.info(f"â„¹ï¸ Directory {path} already exists. Skipping creation.")
         return False
 
 def run_command(command, description="command"):
@@ -319,17 +319,17 @@ def run_command(command, description="command"):
             text=True,
             capture_output=True
         )
-        logger.info(f"✅ {description} completed successfully")
+        logger.info(f"âœ… {description} completed successfully")
         logger.debug(f"Output: {result.stdout}")
         return True
     except subprocess.CalledProcessError as e:
-        logger.error(f"❌ {description} failed with code {e.returncode}")
+        logger.error(f"âŒ {description} failed with code {e.returncode}")
         logger.error(f"Error output: {e.stderr}")
         return False
 
 def main():
     """Main execution function"""
-    logger.info("🚀 Starting DeepSight + WealthBridge project setup...")
+    logger.info("ðŸš€ Starting DeepSight + WealthBridge project setup...")
     
     # Step 1: Create project directories
     logger.info("Setting up project directory structure...")
@@ -425,42 +425,42 @@ ENV/
     if push_script_created and os.name != 'nt':  # Not on Windows
         try:
             os.chmod("push_to_github.py", 0o755)
-            logger.info("✅ Made push_to_github.py executable")
+            logger.info("âœ… Made push_to_github.py executable")
         except Exception as e:
-            logger.warning(f"⚠️ Could not make push_to_github.py executable: {str(e)}")
+            logger.warning(f"âš ï¸ Could not make push_to_github.py executable: {str(e)}")
     
     # Step 8: Attempt to run the push script if environment is properly configured
-    logger.info("\n🔍 Checking if GitHub token is configured...")
+    logger.info("\nðŸ” Checking if GitHub token is configured...")
     try:
         with open(".env", "r") as f:
             env_content = f.read()
         
         if "your_github_token_here" in env_content:
-            logger.warning("⚠️ GitHub token not configured. Please update the .env file with your GitHub token.")
-            print("\n⚠️ Setup completed but GitHub deployment was skipped.")
+            logger.warning("âš ï¸ GitHub token not configured. Please update the .env file with your GitHub token.")
+            print("\nâš ï¸ Setup completed but GitHub deployment was skipped.")
             print("   Please edit the .env file to add your GitHub token, then run:")
             print("   python push_to_github.py")
         else:
             logger.info("GitHub token appears to be configured. Running initial push...")
-            print("\n🎉 All files have been created or updated. Now running the initial push to GitHub...")
+            print("\nðŸŽ‰ All files have been created or updated. Now running the initial push to GitHub...")
             
             # Create logs directory for the push script
             create_directory("logs")
             
             # Run the push script
             if run_command("python push_to_github.py", "initial GitHub push"):
-                print("\n✅ Initial GitHub push completed successfully!")
+                print("\nâœ… Initial GitHub push completed successfully!")
             else:
-                print("\n❌ Initial GitHub push failed. Please check the logs and try again.")
+                print("\nâŒ Initial GitHub push failed. Please check the logs and try again.")
     except Exception as e:
-        logger.error(f"❌ Error checking GitHub token: {str(e)}")
-        print("\n⚠️ Setup completed but GitHub deployment check failed.")
+        logger.error(f"âŒ Error checking GitHub token: {str(e)}")
+        print("\nâš ï¸ Setup completed but GitHub deployment check failed.")
     
-    print("\n📋 Setup Summary:")
+    print("\nðŸ“‹ Setup Summary:")
     print("   - Project structure created")
     print("   - Configuration files initialized")
     print("   - Deployment script created")
-    print("\n📝 Next Steps:")
+    print("\nðŸ“ Next Steps:")
     print("   1. Edit .env file with your actual API keys")
     print("   2. Install dependencies: pip install -r requirements.txt")
     print("   3. Run the push script: python push_to_github.py")
