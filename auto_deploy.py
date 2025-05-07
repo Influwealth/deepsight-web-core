@@ -1,10 +1,5 @@
 ﻿import subprocess
 import os
-
-# Configure Git settings (use local instead of global)
-subprocess.run(["git", "config", "--local", "user.name", "Influwealth"], check=True)
-subprocess.run(["git", "config", "--local", "user.email", "influwealth@example.com"], check=True)
-
 # Ensure public/ directory exists
 output_dir = "deepsight-web-core/public"
 os.makedirs(output_dir, exist_ok=True)
